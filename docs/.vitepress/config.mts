@@ -1,28 +1,51 @@
 import { defineConfig } from 'vitepress'
+import { withSidebar } from 'vitepress-sidebar';
 
-// https://vitepress.dev/reference/site-config
-export default defineConfig({
-  title: "My Awesome Project",
+const vitePressOptions = defineConfig({
+  title: "丁知识库",
   description: "A VitePress Site",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Vue', link: '/vue/intro' },
+      { text: 'Vuex', link: '/vuex/intro' }
     ],
 
     sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+      // {
+      //   text: 'Examples',
+      //   items: [
+      //     { text: 'Markdown Examples', link: '/markdown-examples' },
+      //     { text: 'Runtime API Examples', link: '/api-examples' },
+      //   ]
+      // }
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
+    // socialLinks: [
+    //   { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+    // ]
   }
 })
+
+// const vitePressSidebarOptions = {
+//   documentRootPath: '/docs',
+//   collapsed: false,
+//   useTitleFromFileHeading: true
+// };
+
+const vitePressSidebarOptions = [
+  {
+    documentRootPath: 'docs',
+    scanStartPath: 'vue',
+    basePath: '/vue/',
+    resolvePath: '/vue/',
+    useTitleFromFileHeading: true,
+  },
+  {
+    documentRootPath: 'docs',
+    scanStartPath: 'vuex',
+    resolvePath: '/vuex/',
+    useTitleFromFrontmatter: true
+  }
+]
+
+export default defineConfig(withSidebar(vitePressOptions, vitePressSidebarOptions));
