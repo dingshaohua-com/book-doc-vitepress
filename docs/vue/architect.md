@@ -603,7 +603,7 @@ export default {
 遇到被限制了提交了，先不要骂娘，出于团队规范的考虑，你应该先根据提示解决自己的问题！  
 Husky 在提交或推送时，自动检查提交信息、检查代码 和 运行测试。
 
-首先安装它 `yarn add --dev husky` ，之后使用初始化命令 `npx husky init`，这将会 生成 .husky/pre-commit 脚本，并更新 package.json 中的 prepare 脚本。
+首先安装它 `npm install -D husky` ，之后使用初始化命令 `npx husky init`，这将会 生成 .husky/pre-commit 脚本，并更新 package.json 中的 prepare 脚本。
 
 最后，你可以在.husky/pre-commit 中编写 shell 脚本（如果你更喜欢 js 脚本，[可以看这里](https://typicode.github.io/husky/zh/how-to.html#%E9%9D%9E-shell-%E8%84%9A%E6%9C%AC%E9%92%A9%E5%AD%90)）,脚本将会在你执行 git commit 命令的时候被触发。
 
