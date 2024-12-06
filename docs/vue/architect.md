@@ -20,20 +20,18 @@ npm create vite
 因为 vite 并没有提供默认的内置支持，所以我们需要自己安装
 
 ```shell
-yarn add less less-loader --dev
+npm install -D less less-loader
 ```
 
 要求项目中，书写样式必须 scope，防止样式污染
 
 ```html
+<!-- xxx.vue -->
 <style scoped lang="less">
   .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+    color: red;
     &:hover {
-      filter: drop-shadow(0 0 2em #646cffaa);
+      color: blue;
     }
   }
 </style>
@@ -57,7 +55,7 @@ export default defineConfig({
 ```
 
 这样仅仅是功能可以使用了，  
-但如果你的项目是 ts，还需要在 ts 配置文件中做一些配置以使得支持 ts（如 ts 报错 智能路径提示）。
+但若是 ts 项目，还需要在 ts 配置文件中做一些配置以使得支持 ts（如 ts 报错 智能路径提示）。
 
 ```js
 // tsconfig.json
@@ -70,13 +68,14 @@ export default defineConfig({
 }
 ```
 
-在新的 vite 脚手架创建的项目中，我发现项目中 ts 相关配置被分别提取到了 `tsconfig.app.json`和 `tsconfig.node.json`中，这可能是为了方便区分吧。  
-建议以上代码放到`tsconfig.app.json`这里，最后效果如图
 ![](https://img.dingshaohua.com/book-fe/20240808144627.png)
+:::tip 提示
+在新的 vite 脚手架创建的项目中，我发现项目中 ts 相关配置被分别提取到了 `tsconfig.app.json`和 `tsconfig.node.json`中，这可能是为了方便区分吧。建议以上代码放到`tsconfig.app.json`
+:::
 
 ## 添加路由
 
-先安装路由插件 `yarn add vue-router`，再在项目根路径下创建一个路由文件
+先安装路由插件 `npm install vue-router`，再在项目根路径下创建一个路由文件
 
 ```js
 // src/router/index.ts
@@ -87,7 +86,7 @@ export default createRouter({
   routes: [
     {
       path: "/", // 使用动态导入来实现懒加载
-      component: () => import("@/App.vue"),
+      component: () => import("@/pages/home.vue"),
     },
   ],
 });
@@ -107,7 +106,7 @@ app.use(router);
 
 最后，在根组件中引入路由组件标签
 
-```html 
+```html
 <!-- src/App.vue -->
 <template>
   <router-view />
@@ -133,7 +132,7 @@ app.use(router);
 
 简单描述下个文件的内容
 
-```js 
+```js
 // init.ts
 import axios from "axios";
 import store from "@/store";
@@ -222,7 +221,7 @@ requireComponent.keys().forEach(async (filePath) => {
 window.api = api;
 ```
 
-```js 
+```js
 // index.js
 export * as student from "./modules/student";
 export * as teacher from "./modules/teacher";
@@ -252,7 +251,7 @@ export const deleteTeacher = (params) => {
 况且 antdv 是有社区维护的，而非蚂蚁团队官方出品。  
 综上选择 element ui（即便它被阿里收购了）！
 
-现先下载`yarn add element-plus`，后在入口文件中引入
+现先下载`npm install element-plus`，后在入口文件中引入
 
 ```js
 // main.ts
@@ -279,7 +278,7 @@ app.use(ElementPlus)
 Pinia 的 Api 设计非常接近 Vuex5 的 提案，管理数据简单，提供数据和修改数据的逻辑即可，不像之前的 Vuex 需要记忆太多。
 :::
 
-先安装 `yarn add pinia`，之后创建一个 pinia 实例 (根 store) 并将其传递给应用：
+先安装 `npm install pinia`，之后创建一个 pinia 实例 (根 store) 并将其传递给应用：
 
 ```js
 // main.ts
@@ -338,9 +337,9 @@ export const useAlertsStore = defineStore("app", {
 
 ## 定义组件名称
 
-`<script setup> `语法糖里不支持声明 name 属性，但是又不想写两个`<script>`标签，我们可以采用一款插件 `yarn add --dev vite-plugin-vue-setup-extend`，然后在 vite 中配置好此插件。
+`<script setup> `语法糖里不支持声明 name 属性，但是又不想写两个`<script>`标签，我们可以采用一款插件 `npm install -D vite-plugin-vue-setup-extend`，然后在 vite 中配置好此插件。
 
-```js 
+```js
 // vite.config.ts
 ...
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
@@ -367,7 +366,7 @@ export default defineConfig({
 在开发 vue 项目的过程中，像 ref、react 等常用的 api 总是频繁导入，有点麻烦。
 发现 github 上有一个不错的开源工具 unplugin-auto-import，可以借助它 让所需自动导入。
 
-安装 `yarn add --dev unplugin-auto-import` 完成后，在 vite 配置文件中添加即可。
+安装 `npm install -D unplugin-auto-import` 完成后，在 vite 配置文件中添加即可。
 
 ```js
 // vite.config.js
@@ -384,7 +383,7 @@ export default defineConfig({
 
 之后，你变可以这么用了
 
-```html 
+```html
 <!-- xx.vue -->
 <script setup>
   const str = ref("你好，世界");
@@ -456,7 +455,7 @@ export default (...arg) => {
 Prettier 前端代码格式化工具。  
 确保代码的缩进、括号、引号、换行等样式一致。
 
-我们安装 `yarn add --dev prettier` ，然后在根目录创建配置文件。
+我们安装 `npm install -D prettier` ，然后在根目录创建配置文件。
 
 ```js
 // prettier.config.js
@@ -477,7 +476,7 @@ export default {
 
 ESLint 是一个代码检查工具(默认只检查 js，不支持 ts 或 css)，用来检查你的代码是否符合指定的规范。
 
-安装 eslint `yarn add eslint --dev` ，选择合适的配置项， 即可自动生成 `eslint.config.js`
+安装 eslint `npm install -D eslint` ，选择合适的配置项， 即可自动生成 `eslint.config.js`
 
 ```shell
 npm create @eslint/config
@@ -486,11 +485,11 @@ npm create @eslint/config
 至此，项目就已经支持 eslint 了，  
 可以使用检查命令 `npx eslint` 或者 自动修复错误命令 `npx eslint --fix`。
 
-若想要编辑器也支持项目中 eslint 配置，可到商店安装 eslint 插件，然后重启编辑器就可以看到效果  
+若想要编辑器也支持项目中 eslint 配置，可到商店安装 eslint 插件，后重启编辑器就可以看到效果  
 ![](https://img.dingshaohua.com/book-fe/202408101526687.png)
 
 :::tip 注意
-上诉提示为项目中 eslint 禁用 var 关键字，需要在 eslint 配置文件中增加此规则
+上诉演示提示为项目中 eslint 禁用 var 关键字，需要在 eslint 配置文件中增加此规则
 
 ```js
 // eslint.config.js
@@ -503,6 +502,44 @@ export default [
 
 :::
 
+最后，贴出一个常用的自定义的规则
+
+```js
+// eslint.config.js
+export default [
+  // ...
+  {
+    rules: {
+      "no-var": "error", // 禁止使用var
+      // ---vue-eslint参考：https://eslint.vuejs.org/rules---
+      "vue/multi-word-component-names": "off",
+      "vue/attribute-hyphenation": ["error", "always"], // vue模板属性中划线
+      "vue/component-name-in-template-casing": ["error", "kebab-case"], // vue模板使用组件名规范
+      "vue/html-self-closing": [
+        "error",
+        {
+          html: {
+            void: "always",
+            normal: "always",
+            component: "always",
+          },
+        },
+      ], // 强制自闭合标签
+      // ---tslint 规则集参考：https://typescript-eslint.io/rules---
+      "@typescript-eslint/no-explicit-any": "warn", // 允许使用any类型，但是警告（默认即使警告，可以不用声明）
+      "@typescript-eslint/no-var-requires": "warn", // 允许使用require，但是警告(默认不允许)
+      "@typescript-eslint/no-empty-function": "off", // 允许空方法，因为可能是做单例限制构造or被注解修饰的空方法（默认为error）
+      "@typescript-eslint/ban-ts-comment": "off", // 允许@ts- 指令的使用，如@ts-nocheck（默认不允许使用）
+      "@typescript-eslint/no-non-null-assertion": "off", // 允许 非空断言操作符（默认为不允许）
+      // '@typescript-eslint/explicit-module-boundary-types': 'off'  // 函数必须定义参数类型和返回类型，默认即是关闭校验
+      "no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
+];
+```
+
 ## Eslint 与 Prettier
 
 一般情况下 我们不会单独运行 prettier，而是将 prettier 集成到 eslint 中，作为一项 rule 进行提示与修复。
@@ -513,12 +550,12 @@ export default [
 - eslint-plugin-prettier：一个 ESLint 插件，它将 Prettier 作为规则在 ESLint 内部运行。
 
 ```
-yarn add --dev eslint-config-prettier eslint-plugin-prettier
+npm install -D eslint-config-prettier eslint-plugin-prettier
 ```
 
 安装完成后，在 eslint 配置文件中，使用 eslint-plugin-prettier 插件即可(此插件会自动调用 eslint-config-prettier)
 
-```js 
+```js
 // eslint.config.js
 ...
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
@@ -654,10 +691,10 @@ if (!semver.satisfies(process.version, version)) {
 }
 ```
 
+**最终方案**  
+但是考虑到在 preinstall 阶段的时候，你可能无法使用 chalk、 semver 三方包，随意我们改为如下
 
-**最终方案**      
-但是考虑到在 preinstall 阶段的时候，你可能无法使用 chalk、 semver三方包，随意我们改为如下
-```js 
+```js
 // version-compare.js
 
 // 版本比较函数
@@ -700,8 +737,7 @@ export default (v1, v2, operator) => {
 // console.log(versionCompare('1.2.4', '1.2.3', '<=')); // true
 ```
 
-
-```js 
+```js
 // preinstall.js
 import process from "node:process";
 import versionCompare from "./version-compare.js";
@@ -716,7 +752,9 @@ console.log(pkgManagerExecpath);
 const allowPkgManager = pkgManagerExecpath.indexOf(pkgManager) > -1;
 if (!allowPkgManager) {
   console.error(`\x1B[1;31m${"*".repeat(40)}\x1B[0;0m`);
-  console.error(`\x1B[1;31m* 包管理器不符合要求，要求为 ${pkgManager}\x1B[0;0m`);
+  console.error(
+    `\x1B[1;31m* 包管理器不符合要求，要求为 ${pkgManager}\x1B[0;0m`
+  );
   console.error(`\x1B[1;31m${"*".repeat(40)}\x1B[0;0m`);
   console.error(``);
   process.exit(1);
@@ -725,7 +763,9 @@ if (!allowPkgManager) {
 const allowNodeVersion = versionCompare(currentNodeVersion, version, ">=");
 if (!allowNodeVersion) {
   console.error(`\x1B[1;31m${"*".repeat(50)}\x1B[0;0m`);
-  console.error(`\x1B[1;31m* Node不符合项目要求v${version}, 您的为 ${process.version}\x1B[0;0m`);
+  console.error(
+    `\x1B[1;31m* Node不符合项目要求v${version}, 您的为 ${process.version}\x1B[0;0m`
+  );
   console.error(`\x1B[1;31m${"*".repeat(50)}\x1B[0;0m`);
   console.error(``);
   process.exit(1);
