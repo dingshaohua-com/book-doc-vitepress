@@ -9,7 +9,7 @@ const dynamicNavbarCfg = {
     icon: holyTrinityImg,
     nav: [
       { text: "Vue", link: "/vue/intro" },
-      { text: "Vue", link: "/vuex/intro" },
+      { text: "Vuex", link: "/vuex/intro" },
     ],
   },
   feFwAndLib: {
